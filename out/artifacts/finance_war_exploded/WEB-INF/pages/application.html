@@ -177,21 +177,21 @@
                         <table style="display: table;" id="app_tab">
                             <thead>
                                 <tr>
-                                    <th>编号</th>
-                                    <th>描述</th>
-                                    <th>费用</th>
-                                    <th>操作</th>
+                                    <th  style='width: 50px;'>编号</th>
+                                    <th  style='width: 200px;'>描述</th>
+                                    <th  style='width: 100px;'>费用</th>
+                                    <th  style='width: 130px;'>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr>
+<!--                            <tr>-->
 <!--                                <td>1</td>-->
 <!--                                <td></td>-->
 <!--                                <td> </td>-->
 <!--                                <td>-->
 <!--                                    <input type="button" class="element-button error-button remove-app-list" value="✖移除">-->
 <!--                                </td>-->
-                            </tr>
+<!--                            </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -203,9 +203,9 @@
                         <table style="display: table;font-size: 14px;" id="app_file_tab">
                             <thead>
                                 <tr>
-                                    <th>序号</th>
-                                    <th>文件名</th>
-                                    <th>操作</th>
+                                    <th style='width: 50px;'>序号</th>
+                                    <th style='width: 150px;'>文件名</th>
+                                    <th style='width: 100px;'>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -221,8 +221,13 @@
                         </table>
                     </div>
                 </div>
-                
-                <div class="form" style="display: none">
+
+                <div class="form">
+                    <label class="inlineblock title" for="app-sum-money">申请金额￥：</label>
+                    <input type="text" disabled autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额" id="app-sum-money">
+                </div>
+
+                <div class="form" style="display: none;">
                     <label class="inlineblock title">批准金额￥：</label>
                     <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="批准金额">
                 </div>
@@ -236,6 +241,7 @@
             </form>
 
             <div class="add-app-list-ele" style="display: none;">
+                <h3>添加申请项</h3>
                 <div class="form">
                     <label class="inlineblock title">申请金额￥：</label>
                     <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额" id="app-money">

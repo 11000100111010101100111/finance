@@ -118,6 +118,12 @@ body::-webkit-scrollbar{
     border-radius: 5px;
     transition: width 0.8s;
 }
+.add-item-page table tr td,.add-item-page table tr th{
+    width: 125px;
+}
+.add-item-page table input[type="button"]{
+    font-size: 10px;
+}
 
 .element-button{
     color: #fff;

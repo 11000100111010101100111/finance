@@ -621,6 +621,10 @@
 
        //关闭增加申请信息项列表面板
        function resetList(){
+
+           isModify = false;
+           modifyTr = null;
+
            $(".add-item-page .add-app-list-ele").css("width","0");
            $(".add-item-page .add-app-list-ele").css("display","none");
             $("#app-money").val("");
@@ -646,39 +650,69 @@
 
        //验证申请信息项列表面板信息
        function hasData() {
-
-           return true;
+            let val = $("#app-money").val();
+           return val==null||val===""|| isNaN(val);
        }
 
        function addAppList(){
            let money = $("#app-money").val();
-           let remark = $("#app-remark").val();
+           let remarks = $("#app-remark").val();
 
            let no = $("#app_tab tbody").find("tr").length+1;
 
+           let remark = remarks;
+            remark = (remark.length>10)?remark.substring(0,10)+"...":remark;
+
             let line = " <tr><td>"+no
-                +"</td> <td>"+remark
+                +"</td> <td title='"+remarks+"' style='cursor: pointer;'>"+(remark==null||remark===""?"无...":remark)
                 +"</td><td>"+money
-                +"</td><td><input type='button' class='element-button error-button remove-app-list' value='✖移除'>" +
-                "<input type='button' class='element-button normal-button modify-app-list' value='✍修改'></td></tr>";
-           $(".box-list-list table tbody").append("");
+                +"</td><td><input type='button' class='element-button error-button remove-app-list' value='✖移除'><input type='button' class='element-button normal-button modify-app-list' value='✍修改'></td></tr>";
+
+           // $(".box-list-list table tbody").append("");
 
            $("#app_tab tbody").append(line);
        }
+
        //添加一条申请信息到列表
        $(".add-item-page .add-app-list-ele .sure").click(function () {
-
+            if(hasData()){
+                alert( isNaN( $("#app-money").val() ) ? "无法识别的费用！" : "费用为必填项!!!" );
+                return;
+            }
            if(confirm("确认添加这条款项吗？")){
-               addAppList();
 
+               if(isModify){
+                   removeApList(modifyTr.find("input")[0]);
+               }
+
+               addAppList();
+               let sum_money= $("#app-sum-money").val();
+               let item_money = parseFloat($("#app-money").val() ) + (sum_money==null||sum_money===""?0:parseFloat(sum_money));
+                $("#app-sum-money").val(item_money);
                resetList();
            }
+       });
 
+       //移除一条申请信息
+       let isModify=false;
+       let modifyTr;
+       function removeApList(ele){
+           if(confirm("确认删除这条款项吗？")){
+               $(ele).parents("tr").remove();
+           }
+       }
+
+       $("#app_tab tbody tr .remove-app-list").click(function () {
+           removeApList(this);
+           console.log("123456")
        });
 
        //修改选定一条申请信息
-       $(".add-item-page .modify-app-list").click(function () {
-            let money="";
-            let remork ="";
+       $("#app_tab tbody tr .modify-app-list").click(function () {
+            let money=$(modifyTr).find("tbody tr td")[2].html();
+            let remork =$(modifyTr).find("tbody tr td")[1].html();
+            isModify = true;
+           modifyTr = this;
            openList();
+           console.log("123456")
        });
