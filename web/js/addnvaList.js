@@ -137,4 +137,25 @@ function dateToString(time) {
         seconds = "0" + seconds;
     }
     return  y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + " " + hour + ":" + minutes + ":" + seconds;
+
+}
+function getAppList() {
+    var arr=[];
+    var list = $(".add-item-page .input-msg");
+    for(i=0;i<list.length;i++){
+        arr[i]=list[i].value;
+    }
+    arr[list.length] = $("[name = 'item-chengben']").val()==="直接成本"?1:2;
+    arr[list.length+1] = $("[name = 'item-fukuan']").val()==="公账"?1:2;
+    arr[list.length+2] = $("[name = 'item-kuanxiang']").val()==="预付类"?1:2;
+    return arr;
+}
+function judgeAppList(){
+    var arr=getAppList();
+
+}
+function judgeAppLis(uType){
+
+    var arr=getAppList();
+
 }

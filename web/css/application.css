@@ -1,7 +1,7 @@
 
-input[type='button'],
+/*input[type='button'],*/
+/*input[type='submit'],*/
 input[type='text'],
-input[type='submit'],
 textarea {
     border-radius: 5px;
     border: 1px solid #999;
@@ -13,12 +13,12 @@ textarea {
 
 }
 
-input[type='button'],
-input[type='submit'] {
-    color: #fff;
-    background-color: #337ab7;
-    margin: 2px;
-}
+/*input[type='button'],*/
+/*input[type='submit'] {*/
+/*    color: #fff;*/
+/*    background-color: #337ab7;*/
+/*    margin: 2px;*/
+/*}*/
 
 textarea {
     width: 70%;
@@ -145,6 +145,7 @@ td {
     border-radius: 5px;
     box-shadow: 0 0 12px #666;
     background-color: #fff;
+    transition: all 0.5s;
 }
 
 /* .showitem{
@@ -206,13 +207,13 @@ td {
 }
 
 .add-item-page .btn .submit {
-    background-color: #337ab7;
-    color: #fff;
+    /*background-color: #337ab7;*/
+    /*color: #fff;*/
     border: 1px solid #337ab7;
 }
 
 .add-item-page .btn .button {
-    background-color: #f0ad4e;
-    color: #fff;
+    /*background-color: #f0ad4e;*/
+    /*color: #fff;*/
     border: 1px solid #f0ad4e;
 }

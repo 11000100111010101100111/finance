@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="exit">
-            <input type="button" value="安全退出">
+            <input type="button" value="安全退出" class="element-button normal-button">
         </div>
     </div>
     <div class="box-left menu">
@@ -52,13 +52,13 @@
                 <option value="公账">公账</option>
                 <option value="私账">私账</option>
             </select>
-            <input type="button" value="查询" >
+            <input type="button" value="查询" class="element-button normal-button">
         </div>
 
         <div class="box-list-operater show">
-            <input type="button" value="新增" class="add-item">
-            <input type="button" value="修改" class="modify-item">
-            <input type="button" value="删除" class="remove-item">
+            <input type="button" value="新增" class="element-button add-item normal-button">
+            <input type="button" value="修改" class="element-button modify-item info-button">
+            <input type="button" value="删除" class="element-button remove-item error-button">
         </div>
         
         <div class="box-list-list show">
@@ -106,7 +106,7 @@
                         <td>待审核</td>
                         <td>22222</td>
                         <td>
-                            <input type="button" value="详情" class="item-operator-detil" onclick="showdetil(this)">
+                            <input type="button" value="详情" class="element-button info-button item-operator-detil" onclick="showdetil(this)">
                         </td>
                     </tr>
                 </tbody>
@@ -173,8 +173,8 @@
                 <div class="form">
                     <label class="inlineblock title" >申请项：</label>
                     <div class="inlineblock">
-                        <input type="button" class="inlineblock" value="添加">
-                        <table class="inlineblock" id="app_tab">
+                        <input type="button" style="display: inline;" value="✚添加" name="add-app-list" class="element-button info-button add-app-list">
+                        <table style="display: table;" id="app_tab">
                             <thead>
                                 <tr>
                                     <th>编号</th>
@@ -185,136 +185,13 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
+<!--                                <td>1</td>-->
+<!--                                <td></td>-->
+<!--                                <td> </td>-->
+<!--                                <td>-->
+<!--                                    <input type="button" class="element-button error-button remove-app-list" value="✖移除">-->
+<!--                                </td>-->
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr><tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr><tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr><tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr><tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr><tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr><tr>
-                                <td>1</td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项描述">
-                                </td>
-                                <td>
-                                    <input type="text" placeholder="输入申请项费用">
-                                </td>
-                                <td>
-                                    <input type="button" value="移除">
-                                </td>
-                            </tr>
-
-
-
-
-
                             </tbody>
                         </table>
                     </div>
@@ -322,8 +199,8 @@
                 <div class="form">
                     <label class="inlineblock title">附件：</label>
                     <div class="inlineblock">
-                        <input type="button" class="inlineblock" value="添加附件">
-                        <table class="inlineblock" id="app_file_tab">
+                        <input type="button" style="display: inline;" name="add-file" value="✚添加" class="element-button normal-button">
+                        <table style="display: table;font-size: 14px;" id="app_file_tab">
                             <thead>
                                 <tr>
                                     <th>序号</th>
@@ -334,39 +211,44 @@
                             <tbody>
                                 <tr>
                                     <td>1</td>
-                                    <td>fileName.file</td>
+                                    <td class="file-name">fileName.file</td>
                                     <td>
-                                        <input type="buttom" value="移除">
-                                        <input type="button" value="下载">
+                                        <input type="button" class="element-button remove-file error-button" value="移除">
+                                        <input type="button" class="element-button download-file normal-button" value="下载">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <div class="form">
-                    <label class="inlineblock title">申请金额￥：</label>
-                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额">
-                </div>
-
                 
                 <div class="form" style="display: none">
                     <label class="inlineblock title">批准金额￥：</label>
                     <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="批准金额">
                 </div>
 
-                <div class="form">
-                    <label class="inlineblock title">申请内容：</label>
-                    <textarea type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请内容..."></textarea>
 
-                </div>
                 <div class="form btn">
-                    <input type="button" class="submit" value="确 定">
-                    <input type="button" class="modify-but" style="display: none;" value="修 改">
-                    <input type="button" class="button" value="返 回">
+                    <input type="button" class="element-button submit info-button" value="确 定">
+                    <input type="button" class="element-button modify-but normal-button" style="display: none;" value="修 改">
+                    <input type="button" class="element-button button error-button" value="返 回">
                 </div>
             </form>
+
+            <div class="add-app-list-ele" style="display: none;">
+                <div class="form">
+                    <label class="inlineblock title">申请金额￥：</label>
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额" id="app-money">
+                </div>
+                <div class="form">
+                    <label class="inlineblock title">申请内容：</label>
+                    <textarea type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请内容..." id="app-remark"></textarea>
+                </div>
+                <div class="form">
+                    <input type="button" class="element-button normal-button sure" value="确认">
+                    <input type="button" class="element-button error-button back" value="返回">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -376,174 +258,24 @@
     <script src="./js/application.js"></script>
     <script>
 
-//         //打开添加信息面板
-//        $(".box-list .box-list-operater .add-item").click(function addItem(){
-//            $(".show").css("opacity","0.2");
-//            $(".add-item-page").css("display","inline-block");
-           
-//         });
-
-//         //关闭面板
-//         function closePanel(){
-//             $(".add-item-page *").removeAttr("disabled");
-//             $(".add-item-page").css("display","none");
-//             $(".show").css("opacity","1");
-
-//             $("input[type='submit']").css("display",'inline');
-//             canontwrite();
-//         }
-//         $(".add-item-page .form .button").click(closePanel);
-
-//         //全选、全不选
-//         function check(vars){
-//             $("table tbody").find("input[type='checkbox']").prop('checked',vars.checked);
-//         }
-//         // 详情
-//         function showdetil(item){
-            
-//             var item_id = $(item).parents("tr").find(".item-id").html();
-//             console.log(item_id);
-
-
-//             // var status = "待提交";
-//             var status = $(item).parents("tr").find("td")[13].innerHTML;
-//             console.log(status);
-//             var arr = ['直接成本','公款','江西省科学院','中国邮政储蓄银行','621799435*****6857','预付类','无','1000','2000'];
-//             if(status != "待提交"){
-//                 //已提交的信息无法在提交，影藏提交按钮
-//                 // $("input[type='submit']").css("display",'none');
-//                 $(".submit").css("display",'none');
-//                 //根据item_id异步查询信息
-//                 //......
-
-
-//                  //已提交的信息无法在修改，内容输入框禁用
-//                 $(".add-item-page .inlineblock,.add-item-page input[type='radio']").attr("disabled",true);
-//             }else{
-//                 arr = readCell(item);
-//             }
-            
-
-//             var list = $(".add-item-page .input-msg");
-//             for(j=0,i=2;j<list.length;i++){
-//                 if(i!=5) {
-//                     list[j].value=arr[i];
-//                     j++;
-//                 }
-//             }
-//             $("[name = 'item-chengben'][value='"+arr[0]+"']").prop("checked",true) ;
-//             $("[name = 'item-fukuan'][value='"+arr[1]+"']").prop("checked",true);
-//             $("[name = 'item-kuanxiang'][value='"+arr[5]+"']").prop("checked",true) ;
-            
-            
-//             $(".show").css("opacity","0.2");
-//             $(".add-item-page").css("display","inline-block");
-//         }
-
-//         //读取当前单元格内容
-//         function readCell(but){
-//             var item = $(but).parents("tr").find("td");
-//             var arr = [];
-//             for(i=3;i < 12;i++){
-//                 var j = i<5 || i>8?i:( i>=5 && i< 8?i+1:5 ) ;
-//                 arr[i-3] = item[j].innerHTML;
-//                 // console.log(item[j].innerHTML);
-//             }
-//             return arr;
-//         }
-//         function canontwrite(){
-//             var list = $(".add-item-page .input-msg");
-//             for(i=0;i<list.length;i++){
-//                 list[i].value = "";
-//             }
-//             $("[name = 'item-chengben']").filter(":radio").removeAttr("checked");
-//             $("[name = 'item-fukuan']").filter(":radio").removeAttr("checked");
-//             $("[name = 'item-kuanxiang']").filter(":radio").removeAttr("checked");
-//         }
-
-//         //获取当前新增信息列表
-//         function getnewMsg(){
-//             var arr=[];
-//             var list = $(".add-item-page .input-msg");
-//             for(i=0;i<list.length;i++){
-//                 arr[i]=list[i].value;
-//             }
-//             arr[list.length] = $("[name = 'item-chengben']").val();
-//             arr[list.length+1] = $("[name = 'item-fukuan']").val();
-//             arr[list.length+2] = $("[name = 'item-kuanxiang']").val();
-//             return arr;
-//         }
-
-
-       
-//         function submit_item(){
-//             var arr = getnewMsg();
-//             for(i=0 ;i<arr.length;i++){
-//                 if( i!=3 && (arr[i] == '' || arr[i] == null)){
-//                     alert("输入不完整！");
-//                     return ;
-//                 }
-//             }
-
-//             var data = {
-//                 typeofchengben:arr[6],
-//                 typeoffukuang:arr[7],
-//                 danwei:arr[0],
-//                 bank:arr[1],
-//                 account:arr[2],
-//                 typeofkuangxiang:arr[8],
-//                 text:arr[3]==""?"-啥也没写-":arr[3],
-//                 application:arr[4],
-//                 approve:arr[5]
-//             }
-//             console.log(data);
-//             if(confirm("是否将这条申请提交？")){
-
-//                 addRow(data);
-//                 //异步提交
-//             }
-//             closePanel();
-//         }
-//         $(".add-item-page .form .submit").click(submit_item);
-
-//         // 向表格中添加一行
-//         function addRow(row){
-// // row:typeofchengben:arr[6],
-// //                 typeoffukuang:arr[7],
-// //                 danwei:arr[0],
-// //                 bank:arr[1],
-// //                 account:arr[2],
-// //                 typeofkuangxiang:arr[8],
-// //                 text:arr[3]==""?"-啥也没写-":arr[3],
-// //                 application:arr[4],
-// //                 approve:arr[5]
-//             var no = $(".box-list-list table tbody").find("tr").length+1;
-//             $(".box-list-list table tbody").append("<tr>"+
-//                         "<td>"+no+"</td>"+
-//                         "<td>"+
-//                             "<input type='checkbox' class='check-item'>"+
-//                         "</td>"+
-//                         "<td class='item-id'>-</td>"+
-//                         "<td>"+row.typeofchengben+"</td>"+
-//                         "<td>"+row.typeoffukuang+"</td>"+
-//                         "<td>"+row.typeofkuangxiang+"</td>"+
-//                         "<td>"+row.danwei+"</td>"+
-//                         "<td>"+row.bank+"</td>"+
-//                         "<td>"+row.account+"</td>"+
-//                         "<td>"+row.text+"</td>"+
-//                         "<td>"+row.application+"</td>"+
-//                         "<td>"+row.approve+"</td>"+
-//                         "<td>****-**-**</td>"+
-//                         "<td>待提交</td>"+
-//                         "<td>****</td>"+
-//                         "<td>"+
-//                             "<input type='button' value='详情' class='item-operator-detil' onclick='showdetil(this)''>"+
-//                             "<input type='button' value='提交' class='item-operator-submit' onclick='submitRow(this)''>"+
-//                         "</td>"+
-//                     "</tr>"
-//             );
-//         }
+        // function resetList(){
+        //     $(".add-item-page .add-app-list-ele").prop("width","0");
+        //     $(".add-item-page .add-app-list-ele").prop("display","none");
+        // }
+        // function showList(){
+        //     $(".add-app-list-ele").prop("display","block");
+        //     // $(".add-item-page").prop("opacity","0");
+        //     // $(".add-app-list-ele").prop("opacity","1");
+        // }
+        //
+        // $(".add-item-page .add-app-list").click(function () {
+        //     $(".add-item-page .add-app-list-ele").prop("width","40%");
+        //     $(".add-item-page .add-app-list-ele").prop("display","block");
+        // });
+        //
+        // $(".add-item-page .add-app-list-ele .back").click(function () {
+        //     resetList();
+        // });
     </script>
-
 </body>
 </html>

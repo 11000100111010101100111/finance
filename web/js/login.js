@@ -173,9 +173,17 @@ function getCodeImg() {
         url: "http://localhost:8080/finance_war_exploded/getCode",
         dataType: "json",
         success: function (data) {
+            var cItem = "";//记录验证码
                 for(i=0;i<data.length;i++){
                     code_now[i]=data[i];
+                    cItem +=data[i];
                 }
+
+                //测试使用
+            $("#uid").val("123464");
+            $("#upwd").val("123456");
+            $("#ucode").val(cItem);
+
                 drawCode();
         },error:function () {
             console.log("验证码拉取失败！");

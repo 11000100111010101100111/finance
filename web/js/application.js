@@ -229,6 +229,10 @@
  
          //关闭面板
          function closePanel(){
+
+             //关闭增加申请信息项列表面板
+             resetList();
+
              $(".add-item-page *").removeAttr("disabled");
              $(".add-item-page").css("display","none");
              $(".show").css("opacity","1");
@@ -433,12 +437,7 @@
             //     approve:arr[8]
             // }
             let ids = $(btn).parents("tr").find("td")[2].innerHTML;
-             // let data={
-             //     sid:uid_now,
-             //     id:ids
-             // };
-            // console.log();
-            // console.log(data);
+
             if(confirm("是否将这条申请提交？")){
                 //异步提交
                 //...
@@ -606,3 +605,80 @@
          });
 
        flushTable();
+
+
+
+       // $(".add-item-page .add-app-list").click(function () {
+       //     $(".add-item-page .add-app-list-ele").css("display","block");
+       //     console.log("111")
+       // });
+       //
+       // $(".add-item-page .add-app-list-ele .back").click(function () {
+       //     $(".add-item-page .add-app-list-ele").css("display","none");
+       //     console.log("111")
+       // });
+
+
+       //关闭增加申请信息项列表面板
+       function resetList(){
+           $(".add-item-page .add-app-list-ele").css("width","0");
+           $(".add-item-page .add-app-list-ele").css("display","none");
+            $("#app-money").val("");
+           $("#app-remark").val("");
+       }
+       function openList() {
+           $(".add-item-page .add-app-list-ele").css("width","40%");
+           $(".add-item-page .add-app-list-ele").css("display","block");
+       }
+       function showList(){
+           $(".add-app-list-ele").prop("display","block");
+       }
+
+       //打开增加申请信息项列表面板
+       $(".add-item-page .add-app-list").click(function () {
+           openList();
+       });
+
+       //关闭增加申请信息项列表面板
+       $(".add-item-page .add-app-list-ele .back").click(function () {
+           resetList();
+       });
+
+       //验证申请信息项列表面板信息
+       function hasData() {
+
+           return true;
+       }
+
+       function addAppList(){
+           let money = $("#app-money").val();
+           let remark = $("#app-remark").val();
+
+           let no = $("#app_tab tbody").find("tr").length+1;
+
+            let line = " <tr><td>"+no
+                +"</td> <td>"+remark
+                +"</td><td>"+money
+                +"</td><td><input type='button' class='element-button error-button remove-app-list' value='✖移除'>" +
+                "<input type='button' class='element-button normal-button modify-app-list' value='✍修改'></td></tr>";
+           $(".box-list-list table tbody").append("");
+
+           $("#app_tab tbody").append(line);
+       }
+       //添加一条申请信息到列表
+       $(".add-item-page .add-app-list-ele .sure").click(function () {
+
+           if(confirm("确认添加这条款项吗？")){
+               addAppList();
+
+               resetList();
+           }
+
+       });
+
+       //修改选定一条申请信息
+       $(".add-item-page .modify-app-list").click(function () {
+            let money="";
+            let remork ="";
+           openList();
+       });
