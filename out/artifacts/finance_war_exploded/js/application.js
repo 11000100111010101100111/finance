@@ -651,7 +651,9 @@
        //验证申请信息项列表面板信息
        function hasData() {
             let val = $("#app-money").val();
-           return val==null||val===""|| isNaN(val);
+            alert( isNaN( $("#app-money").val() ) ? "无法识别的费用！" : (
+               parseFloat($("#app-money").val())<=0||parseFloat(val)>999999999?"输入费用不在合理范围": "费用为必填项!!!" ) );
+           return val==null||val===""|| isNaN(val) || parseFloat(val)<=0 || parseFloat(val)>999999999;
        }
 
        function addAppList(){
@@ -663,10 +665,10 @@
            let remark = remarks;
             remark = (remark.length>10)?remark.substring(0,10)+"...":remark;
 
-            let line = " <tr><td>"+no
-                +"</td> <td title='"+remarks+"' style='cursor: pointer;'>"+(remark==null||remark===""?"无...":remark)
-                +"</td><td>"+money
-                +"</td><td><input type='button' class='element-button error-button remove-app-list' value='✖移除'><input type='button' class='element-button normal-button modify-app-list' value='✍修改'></td></tr>";
+            let line = "<tr><td>" + no
+                +"</td><td title='"+remarks+"' style='cursor: pointer;'>" + (remark==null||remark===""?"无...":remark)
+                +"</td><td>" + money
+                +"</td><td><input type='button' class='element-button error-button remove-app-list' value='✖移除' onclick='remove_app_list(this)' /><input type='button' class='element-button normal-button modify-app-list' value='✍修改' onclick='modify_app_list(this)' /></td></tr>";
 
            // $(".box-list-list table tbody").append("");
 
@@ -675,44 +677,54 @@
 
        //添加一条申请信息到列表
        $(".add-item-page .add-app-list-ele .sure").click(function () {
-            if(hasData()){
-                alert( isNaN( $("#app-money").val() ) ? "无法识别的费用！" : "费用为必填项!!!" );
+            if(hasData())
                 return;
-            }
-           if(confirm("确认添加这条款项吗？")){
+           // if(confirm("确认添加这条款项吗？")){
 
-               if(isModify){
-                   removeApList(modifyTr.find("input")[0]);
-               }
-
-               addAppList();
-               let sum_money= $("#app-sum-money").val();
-               let item_money = parseFloat($("#app-money").val() ) + (sum_money==null||sum_money===""?0:parseFloat(sum_money));
-                $("#app-sum-money").val(item_money);
-               resetList();
+           if(isModify){
+               removeApList(modifyTr.find("input")[0]);
            }
-       });
 
+           addAppList();
+           //计算费用和，累加
+           addMoney( $("#app-money").val() );
+
+           resetList();
+           // }
+       });
+        function addMoney(money){
+            let sum_money= $("#app-sum-money").val();
+            let item_money = parseFloat(money ) + (sum_money==null||sum_money===""?0.00:parseFloat(sum_money));
+            $("#app-sum-money").val(item_money);
+        }
+        function decreaseMoney(money){
+            let sum_money= $("#app-sum-money").val();
+            let item_money = (sum_money==null||sum_money===""?0.00:parseFloat(sum_money)) - parseFloat(money);
+            $("#app-sum-money").val(item_money);
+        }
        //移除一条申请信息
        let isModify=false;
        let modifyTr;
        function removeApList(ele){
            if(confirm("确认删除这条款项吗？")){
                $(ele).parents("tr").remove();
+               decreaseMoney( $(ele).parents("tr").find("td")[2].innerHTML );
            }
        }
 
-       $("#app_tab tbody tr .remove-app-list").click(function () {
-           removeApList(this);
-           console.log("123456")
-       });
+       function remove_app_list(ele) {
+           removeApList(ele);
+       }
 
        //修改选定一条申请信息
-       $("#app_tab tbody tr .modify-app-list").click(function () {
-            let money=$(modifyTr).find("tbody tr td")[2].html();
-            let remork =$(modifyTr).find("tbody tr td")[1].html();
+       function modify_app_list(ele) {
+
+            let money=$(ele).parents("tr").find("td")[2].innerHTML;
+            let remark =$(ele).parents("tr").find("td")[1].innerHTML;
+            // console.log(money+"+"+remark);
+           $("#app-money").val(money);
+           $("#app-remark").val(remark);
             isModify = true;
-           modifyTr = this;
+            modifyTr = ele;
            openList();
-           console.log("123456")
-       });
+       }

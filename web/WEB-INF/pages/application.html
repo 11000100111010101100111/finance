@@ -199,7 +199,10 @@
                 <div class="form">
                     <label class="inlineblock title">附件：</label>
                     <div class="inlineblock">
-                        <input type="button" style="display: inline;" name="add-file" value="✚添加" class="element-button normal-button">
+                        <div class="file element-button normal-button"><!--
+                            -->✚添加<!--
+                            --><input type="file" name="add-file">
+                        </div>
                         <table style="display: table;font-size: 14px;" id="app_file_tab">
                             <thead>
                                 <tr>
@@ -244,7 +247,7 @@
                 <h3>添加申请项</h3>
                 <div class="form">
                     <label class="inlineblock title">申请金额￥：</label>
-                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额" id="app-money">
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额" id="app-money" min="0" max="9999999999">
                 </div>
                 <div class="form">
                     <label class="inlineblock title">申请内容：</label>
@@ -282,6 +285,7 @@
         // $(".add-item-page .add-app-list-ele .back").click(function () {
         //     resetList();
         // });
+
     </script>
 </body>
 </html>
