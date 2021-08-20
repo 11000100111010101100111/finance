@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./css/listcss.css">
+    <script src="./js/jquery-1.8.3.min.js" type="text/javascript"></script>
+    <title>申请列表</title>
+</head>
+<body>
+
+    <div class="box-top">
+        <div>
+            <h1>welcome！</h1>
+            <div>
+                <p>通知</p>
+            </div>
+        </div>
+        <div class="exit">
+            <input type="button" value="安全退出">
+        </div>
+    </div>
+    <div class="box-left menu">
+        <h4 class="menu-title">菜单</h4>
+        <ul>
+            <li>
+                <a href="#">申请</a>
+            </li>
+            <li>
+                <a href="#">申请结果</a>
+            </li>
+        </ul>
+    </div>
+    <div class="box-list">
+        <div class="box-list-nav show">
+            <a href="#">首页</a>
+            >
+            <a href="#">付款清单</a>
+        </div>
+
+        <div class="box-list-seach show">
+            <input type="datetime-local" class="start-time" placeholder="请输入开始时间" title="请输入开始时间" value="">
+            <input type="datetime-local" class="end-time" placeholder="请输入开始时间" title="请输入开始时间" value="">
+            <select name="" id="chengben-type" class="cost" aria-placeholder="请选择成本类型" title="请选择成本类型">
+                <option disabled selected value="">-请选择成本类型-</option>
+                <option value="直接成本">直接成本</option>
+                <option value="非直接成本">非直接成本</option>
+            </select>
+            <select name="" id="fukuang-type" class="payType" aria-placeholder="请选择付款类型" title="请选择付款类型">
+                <option disabled selected value="">-请选择付款类型-</option>
+                <option value="公账">公账</option>
+                <option value="私账">私账</option>
+            </select>
+            <input type="button" value="查询" >
+        </div>
+
+        <div class="box-list-operater show">
+            <input type="button" value="新增" class="add-item">
+            <input type="button" value="修改" class="modify-item">
+            <input type="button" value="删除" class="remove-item">
+        </div>
+
+        <div class="box-list-list show">
+            <table>
+                <thead>
+                    <tr>
+                        <th>-</th>
+                        <th>
+                            <input type="checkbox" class="check-item" id="check-item-all" onclick="check(this)">
+                            <label for="check-item-all">全选</label>
+                        </th>
+                        <th>id</th>
+                        <th>成本类型</th>
+                        <th>付款类型</th>
+                        <th>款项性质</th>
+                        <th>收款单位</th>
+                        <th>开户行</th>
+                        <th>银行账户</th>
+                        <th>付款内容</th>
+                        <th>申请净额</th>
+                        <th>批准金额</th>
+                        <th>申请日期</th>
+                        <th>状态</th>
+                        <th>流程实例id</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <input type="checkbox" class="check-item">
+                        </td>
+                        <td class="item-id">1</td>
+                        <td>直接成本</td>
+                        <td>公账</td>
+                        <td>预付类</td>
+                        <td>江西省科学院</td>
+                        <td>95580</td>
+                        <td>362430********986523</td>
+                        <td>123456</td>
+                        <td>1200.00</td>
+                        <td>1500.00</td>
+                        <td>2021-8-16</td>
+                        <td>待审核</td>
+                        <td>22222</td>
+                        <td>
+                            <input type="button" value="详情" class="item-operator-detil" onclick="showdetil(this)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+<!--  -->
+        <div class="add-item-page">
+            <div class="add-item-page-title">
+                <h3>添加</h3>
+            </div>
+            <form action="">
+                <div class="chenbentype form">
+                    <label class="inlineblock title">成本类型：</label>
+                    <div class="inlineblock">
+                        <input type="radio" autocomplete="off" required id="zhijiechengben-item" class="item-chengben" name="item-chengben" value="直接成本">
+                        <label for="zhijiechengben-item">直接成本</label>
+                    </div>
+                    <div  class="inlineblock">
+                        <input type="radio" autocomplete="off" required id="notzhijiechengben-item" class="item-chengben" name="item-chengben" value="非直接成本">
+                        <label for="notzhijiechengben-item">非直接成本</label>
+                    </div>
+                </div>
+
+                <div class="form">
+                    <label  class="inlineblock title">付款类型：</label>
+                    <div class="inlineblock">
+                        <input type="radio" autocomplete="off" required id="gongkuang-item" class="item-fukuan" name="item-fukuan" value="公账">
+                        <label for="gongkuang-item" >公账</label>
+                    </div>
+                    <div class="inlineblock">
+                        <input type="radio" autocomplete="off" required id="sikuang-item" class="item-fukuan" name="item-fukuan" value="私账">
+                        <label for="sikuang-item">私账</label>
+                    </div>
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">收款单位：</label>
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="收款单位">
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">开户行：</label>
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="开户行" >
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">银行账户：</label>
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="银行账户">
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">款项性质：</label>
+                    <div class="inlineblock">
+                        <input type="radio" autocomplete="off" required id="yufu-item" class="item-fukuan" name="item-kuanxiang"  value="预付类">
+                        <label for="yufu-item">预付类</label>
+                    </div>
+                    <div class="inlineblock">
+                        <input type="radio" autocomplete="off" required id="yingfu-item" class="item-fukuan" name="item-kuanxiang" value="应付类">
+                        <label for="yingfu-item">应付类</label>
+                    </div>
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">申请内容：</label>
+                    <textarea type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请内容..."></textarea>
+                    
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">申请金额￥：</label>
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请金额">
+                </div>
+
+                
+                <div class="form">
+                    <label class="inlineblock title">批准金额￥：</label>
+                    <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="批准金额">
+                </div>
+                <div class="form btn">
+                    <input type="button" class="submit" value="确 定">
+                    <input type="button" class="button" value="返 回">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- <script src="/js/jquery-1.8.3.js"></script> -->
+    <script src="./js/addnvaList.js"></script>
+    <script src="./js/listjs.js"></script>
+    <script>
+
+//         //打开添加信息面板
+//        $(".box-list .box-list-operater .add-item").click(function addItem(){
+//            $(".show").css("opacity","0.2");
+//            $(".add-item-page").css("display","inline-block");
+           
+//         });
+
+//         //关闭面板
+//         function closePanel(){
+//             $(".add-item-page *").removeAttr("disabled");
+//             $(".add-item-page").css("display","none");
+//             $(".show").css("opacity","1");
+
+//             $("input[type='submit']").css("display",'inline');
+//             canontwrite();
+//         }
+//         $(".add-item-page .form .button").click(closePanel);
+
+//         //全选、全不选
+//         function check(vars){
+//             $("table tbody").find("input[type='checkbox']").prop('checked',vars.checked);
+//         }
+//         // 详情
+//         function showdetil(item){
+            
+//             var item_id = $(item).parents("tr").find(".item-id").html();
+//             console.log(item_id);
+
+
+//             // var status = "待提交";
+//             var status = $(item).parents("tr").find("td")[13].innerHTML;
+//             console.log(status);
+//             var arr = ['直接成本','公款','江西省科学院','中国邮政储蓄银行','621799435*****6857','预付类','无','1000','2000'];
+//             if(status != "待提交"){
+//                 //已提交的信息无法在提交，影藏提交按钮
+//                 // $("input[type='submit']").css("display",'none');
+//                 $(".submit").css("display",'none');
+//                 //根据item_id异步查询信息
+//                 //......
+
+
+//                  //已提交的信息无法在修改，内容输入框禁用
+//                 $(".add-item-page .inlineblock,.add-item-page input[type='radio']").attr("disabled",true);
+//             }else{
+//                 arr = readCell(item);
+//             }
+            
+
+//             var list = $(".add-item-page .input-msg");
+//             for(j=0,i=2;j<list.length;i++){
+//                 if(i!=5) {
+//                     list[j].value=arr[i];
+//                     j++;
+//                 }
+//             }
+//             $("[name = 'item-chengben'][value='"+arr[0]+"']").prop("checked",true) ;
+//             $("[name = 'item-fukuan'][value='"+arr[1]+"']").prop("checked",true);
+//             $("[name = 'item-kuanxiang'][value='"+arr[5]+"']").prop("checked",true) ;
+            
+            
+//             $(".show").css("opacity","0.2");
+//             $(".add-item-page").css("display","inline-block");
+//         }
+
+//         //读取当前单元格内容
+//         function readCell(but){
+//             var item = $(but).parents("tr").find("td");
+//             var arr = [];
+//             for(i=3;i < 12;i++){
+//                 var j = i<5 || i>8?i:( i>=5 && i< 8?i+1:5 ) ;
+//                 arr[i-3] = item[j].innerHTML;
+//                 // console.log(item[j].innerHTML);
+//             }
+//             return arr;
+//         }
+//         function canontwrite(){
+//             var list = $(".add-item-page .input-msg");
+//             for(i=0;i<list.length;i++){
+//                 list[i].value = "";
+//             }
+//             $("[name = 'item-chengben']").filter(":radio").removeAttr("checked");
+//             $("[name = 'item-fukuan']").filter(":radio").removeAttr("checked");
+//             $("[name = 'item-kuanxiang']").filter(":radio").removeAttr("checked");
+//         }
+
+//         //获取当前新增信息列表
+//         function getnewMsg(){
+//             var arr=[];
+//             var list = $(".add-item-page .input-msg");
+//             for(i=0;i<list.length;i++){
+//                 arr[i]=list[i].value;
+//             }
+//             arr[list.length] = $("[name = 'item-chengben']").val();
+//             arr[list.length+1] = $("[name = 'item-fukuan']").val();
+//             arr[list.length+2] = $("[name = 'item-kuanxiang']").val();
+//             return arr;
+//         }
+
+
+       
+//         function submit_item(){
+//             var arr = getnewMsg();
+//             for(i=0 ;i<arr.length;i++){
+//                 if( i!=3 && (arr[i] == '' || arr[i] == null)){
+//                     alert("输入不完整！");
+//                     return ;
+//                 }
+//             }
+
+//             var data = {
+//                 typeofchengben:arr[6],
+//                 typeoffukuang:arr[7],
+//                 danwei:arr[0],
+//                 bank:arr[1],
+//                 account:arr[2],
+//                 typeofkuangxiang:arr[8],
+//                 text:arr[3]==""?"-啥也没写-":arr[3],
+//                 application:arr[4],
+//                 approve:arr[5]
+//             }
+//             console.log(data);
+//             if(confirm("是否将这条申请提交？")){
+
+//                 addRow(data);
+//                 //异步提交
+//             }
+//             closePanel();
+//         }
+//         $(".add-item-page .form .submit").click(submit_item);
+
+//         // 向表格中添加一行
+//         function addRow(row){
+// // row:typeofchengben:arr[6],
+// //                 typeoffukuang:arr[7],
+// //                 danwei:arr[0],
+// //                 bank:arr[1],
+// //                 account:arr[2],
+// //                 typeofkuangxiang:arr[8],
+// //                 text:arr[3]==""?"-啥也没写-":arr[3],
+// //                 application:arr[4],
+// //                 approve:arr[5]
+//             var no = $(".box-list-list table tbody").find("tr").length+1;
+//             $(".box-list-list table tbody").append("<tr>"+
+//                         "<td>"+no+"</td>"+
+//                         "<td>"+
+//                             "<input type='checkbox' class='check-item'>"+
+//                         "</td>"+
+//                         "<td class='item-id'>-</td>"+
+//                         "<td>"+row.typeofchengben+"</td>"+
+//                         "<td>"+row.typeoffukuang+"</td>"+
+//                         "<td>"+row.typeofkuangxiang+"</td>"+
+//                         "<td>"+row.danwei+"</td>"+
+//                         "<td>"+row.bank+"</td>"+
+//                         "<td>"+row.account+"</td>"+
+//                         "<td>"+row.text+"</td>"+
+//                         "<td>"+row.application+"</td>"+
+//                         "<td>"+row.approve+"</td>"+
+//                         "<td>****-**-**</td>"+
+//                         "<td>待提交</td>"+
+//                         "<td>****</td>"+
+//                         "<td>"+
+//                             "<input type='button' value='详情' class='item-operator-detil' onclick='showdetil(this)''>"+
+//                             "<input type='button' value='提交' class='item-operator-submit' onclick='submitRow(this)''>"+
+//                         "</td>"+
+//                     "</tr>"
+//             );
+//         }
+    </script>
+
+</body>
+</html>

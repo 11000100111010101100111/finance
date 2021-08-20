@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:8080/finance_war_exploded/css/login.css">
+    <title>登录</title>
+</head>
+<body>
+    <div class="caven">
+        <div class="sun"></div>
+    </div>
+    <form class="login" action="http://localhost:8080/finance_war_exploded/home" method="post">
+        <h3>登 录</h3>
+        <div class="from">
+            <div class="input">
+                <div class="inline-ele notfocus">
+                       <div class="font inline-block-ele" style="background-image: url('./res/user.png');"></div><!--
+                    --><input type="text" class="inline-block-ele" id="uid" required placeholder="请输入账号" autocomplete="off"><!--
+                    --><div class="clean inline-block-ele"></div>
+                </div>
+                <label class="lab-id inline-ele" >error:12323!</label>
+            </div>
+            <div class="input">
+                <div class="inline-ele notfocus">
+                    <div class="font inline-block-ele" style="background-image: url('./res/password.png');"></div><!--
+                    --><input type="password" class="inline-block-ele" id="upwd" required placeholder="请输入密码" autocomplete="off"><!--
+                    --><div class="clean inline-block-ele"></div>
+                </div>
+                <label class="lab-pwd inline-ele" >error:12323!</label>
+            </div>
+            <div class="input" style="width: 100%;">
+
+                <div class="inline-ele notfocus">
+                    <div class="font inline-block-ele" style="background-image: url('./res/code.png');"></div><!--
+                    --><input type="text" style="width:75%;font-size: 11px;" class="inline-block-ele" id="ucode" required placeholder="请输入验证码" autocomplete="off"><!--
+                    --><div class="clean inline-block-ele" ></div> 
+                </div>
+                <label class="lab-code inline-ele" >error:12323!</label>
+                <div class="code-img">
+                    <!-- <img src="#" alt="" title="单击换一张!!!"> -->
+                    <canvas title="单击换一张!!!" id="cav">
+                    </canvas>
+                    <a href="#">看不清楚？<br>单击换一张！</a>
+                </div>
+
+                
+            </div>
+
+        </div>
+        <div class="but">
+            <input type="submit" class="sure" value="登  录">
+            <input type="button" class="agine" value="重  置">
+        </div>
+    </form>
+    <script src="http://localhost:8080/finance_war_exploded/js/jquery-1.8.3.js"></script>
+    <script src="http://localhost:8080/finance_war_exploded/js/login.js"></script>
+</body>
+</html>

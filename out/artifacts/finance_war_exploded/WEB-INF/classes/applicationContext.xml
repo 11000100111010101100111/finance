@@ -6,12 +6,13 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.xjh.dao"/>
+    <context:component-scan base-package="com.xjh.service"/>
 
     <bean id="database" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="localhost:3306/finance?characterEcoding=uft8"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/finance?characterEncoding=uft8"/>
         <property name="username" value="root"/>
-        <property name="password" value=""/>
+        <property name="password" value="root"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -20,7 +21,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.xjh.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.xjh.dao"/>
     </bean>
 </beans>

@@ -1,0 +1,71 @@
+input[type='button'],
+input[type='text'],
+input[type='submit'],
+textarea {
+    border-radius: 5px;
+    border: 1px solid #999;
+    /* height: 25px; */
+    /* margin-right:10px;  */
+    font-size: 14px;
+    /* box-sizing: border-box; */
+}
+
+input[type='button'],
+input[type='submit'] {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+textarea {
+    width: 70%;
+    height: 80px;
+}
+.box-list-list{
+    margin-top: 20px;
+    border-radius: 4px;
+}
+.add-item-page{
+    width: 75%;
+    transform: translateX(-50%) translateY(-55%);
+}
+.add-item-page .audio-panel{
+    margin: 2%;
+    width: 96%;
+box-shadow: 0 0 4px #666;
+border-radius: 5px;
+
+}
+.add-item-page .audio-linked{
+    border-radius: 5px;
+    margin: 2%;
+    width: 96%;
+    height: 50%;
+    padding-top: 5px;
+    box-shadow: 0 0 4px #666;
+}
+.add-item-page .audio-linked .audio-linked-title{
+    width: 100%-5px;
+    height: 50px;
+    background-color: #ccc;
+    margin: 5px;
+    border-radius: 5px;
+}
+.add-item-page .audio-linked .audio-linked-title input{
+    transform: translateY(11px) translateX(10px);
+    width: 100px;
+    height: 80%;
+    text-align: center;
+    line-height: initial;
+    background-color: #fff;
+    color: #333;
+    border: none;
+}
+.add-item-page .audio-linked .audio-linked-tab{
+    margin: 5px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    
+}
+.add-item-page .audio-linked .audio-linked-tab table{
+    width: 100%;
+}

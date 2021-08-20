@@ -3,7 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <typeAliases>
+        <typeAlias type="com.xjh.pojo.User" alias="user"/>
+    </typeAliases>
     <mappers >
-        <mapper resource="classpath:mapper.xml"/>
+        <mapper resource="/mapper/loginMapper.xml"/>
     </mappers>
 </configuration>
