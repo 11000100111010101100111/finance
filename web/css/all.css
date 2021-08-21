@@ -18,7 +18,10 @@ body::-webkit-scrollbar{
 .box-top *{
     color: #fff;
 }
-
+.box-top div h1{
+    padding-top: 10px;
+    padding-left: 10px;
+}
 .box-top .exit input{
     width: 100px;
     height: 30px;
@@ -71,6 +74,7 @@ body::-webkit-scrollbar{
 
 .box-left ul li{
     margin: 10px;
+    list-style: none;
     border-left: 2.5px solid rgba(0,0,0,0);
 }
 .box-left ul li a{

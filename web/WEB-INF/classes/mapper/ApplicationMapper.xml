@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xjh.dao.ApplicationDao">
+    <!--
+ * Created by IntelliJ IDEA.
+ * User: 波罗的海
+ * Date: 2021/8/21
+ * Time: 21:02
+-->
+<!--    public List<PaymentSlip> getApplicationList(Long uid);-->
+    <select id="getApplicationList" parameterType="java.lang.Long" resultType="com.xjh.pojo.AppPaySlip">
+        SELECT payment_slip.id AS id,
+        payment_slip.payee AS payee,
+        payment_slip.bank AS bank,
+        payment_slip.bankcount AS bankcount,
+        payment_slip.costtype AS costtype,
+        payment_slip.chargetype AS chargetype,
+        payment_slip.amountcategory AS amountcategory,
+        payment_slip.appamount AS appamount,
+        payment_slip.audioamount AS audioamount,
+        payment_slip.illustrate AS illustrate,
+        app_form.id AS nodeid,
+        app_form.status AS `status`,
+        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND app_form.oder_user_id= #{uid};
+    </select>
+<!--    public AppPaySlip getApplication(Long id);-->
+    <select id="getApplication" resultType="com.xjh.pojo.AppPaySlip" parameterType="java.lang.Long">
+       SELECT payment_slip.id AS id,
+        payment_slip.payee AS payee,
+        payment_slip.bank AS bank,
+        payment_slip.bankcount AS bankcount,
+        payment_slip.costtype AS costtype,
+        payment_slip.chargetype AS chargetype,
+        payment_slip.amountcategory AS amountcategory,
+        payment_slip.appamount AS appamount,
+        payment_slip.audioamount AS audioamount,
+        payment_slip.illustrate AS illustrate,
+        app_form.id AS nodeid,
+        app_form.status AS `status`,
+        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND payment_slip.id= #{id};
+    </select>
+
+    <insert id="addApplication" parameterType="com.xjh.pojo.AppPaySlip" useGeneratedKeys="true" keyProperty="id">
+        insert into payment_slip(
+            payee,
+            bank,
+            bankcount,
+            costtype,
+            chargetype,
+            amountcategory,
+            appamount,
+            audioamount,
+        illustrate,) values(
+            #{payee},
+            #{bank},
+            #{bankCount},
+            #{costType},
+            #{chargeType},
+            #{amountCategory},
+            #{appamount},
+            #{audioamount},
+            #{illustrate},
+        )
+    </insert>
+    <insert id="addAppForm" parameterType="com.xjh.pojo.AppPaySlip" >
+        insert into app_form(
+            payslip_id,
+            oder_user_id,
+            status,
+            `time`) values(
+            #{payslip_id},
+            #{uid},
+            #{status},
+            now()
+        )
+    </insert>
+</mapper>

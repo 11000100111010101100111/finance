@@ -1,3 +1,6 @@
+var code_now = [""];//存放验证码
+
+
 $(".login .from .input input").blur(function inputBlur(){
     $(this).parent("div").removeClass("getFocus");
     $(this).parent("div").addClass("notfocus");
@@ -18,77 +21,125 @@ function errorinput(item,msg){
         $(item).parents(".input").find("label").css("opacity","1");
         $(item).parents(".input").find("label").html(msg);
 }
+
+let boolId=false;
+let boolPwd=false;
+let boolCode=false;
 $("#uid").blur(function loseuid(){
     var id = $(this).val();
     if(id.trim()==""||id==null){
         $(this).val("");
+        boolId=false;
         // errorinput(this,"error:输入不能为空!");
         return;
     }
-    if(id!="123456"){
-        errorinput(this,"error:账号不存在!");
-    }else{
-        trueinput(this);
-    }
+    // for(i =0;i<id.length;i++){
+        if(!id.match("[0-9]")){
+            boolId=false;
+            errorinput(this,"error:账号格式有无!");
+            return;
+        }
+    // }
+    trueinput(this);
+    boolId=true;
 });
 $("#upwd").blur(function loseuid(){
     var pwd = $(this).val();
     var uid = $("#uid").val();
     if(pwd.trim()==""||pwd==null){
         $(this).val("");
+        boolPwd=false;
         // errorinput(this,"error:输入不能为空!");
         return;
     }
-    if(uid.trim() =="" || uid.trim()==null){
-        return;
-    }
+    // if(uid.trim() =="" || uid.trim()==null){
+    //     boolPwd=false;
+    //     return;
+    // }
 
-
-    if(pwd!="123456" && uid.trim()!="123456"){
-        errorinput(this,"error,账号或密码有误!");
+    if(pwd.trim().length<6||pwd.trim().length>10){
+        boolPwd=false;
+        errorinput(this,"error,密码格式有误!");
     }else{
         trueinput(this);
+        boolPwd=true;
     }
 });
 $("#ucode").blur(function loseuid(){
-    var code = $(this).val();
+    judgeCode();
+});
+function judgeCode(){
+    var code = $("#ucode").val();
+
     var item = "";
     for (i = 0; i < code_now.length;i++){
         item += code_now[i];
     }
     if(code.trim()==""||code==null){
-        $(this).val("");
-        // errorinput(this,"error:输入不能为空!");
+        boolCode=false;
+        // $("#ucode").val("");
         return;
     }
     if(code != item){
+        boolCode=false;
         errorinput(this,"验证码输入有误！");
 
-        // 重绘验证码
-        getCodeImg();
-        drawCode();
+        // $("#ucode").val("");
     }else{
+        boolCode=true;
         trueinput(this);
     }
-});
+}
 
 $(".login .but .sure").click(function submit(){
 
-    // window.location.href="application.html";
-    // $(this).submit();
-    // var id = $("#uid").val();
-    // var pwd = $("#upwd").val();
-    // var code = $("#ucode").val();
-    // var single = id=="123456"&&pwd=="123456";
-    // var s = code=="123456";
-    // if(single&&s){
-    //     $(this).parent("div").removeClass("notfocus");
-    //     $(this).parent("div").addClass("getFocus");
+    judgeCode();
+    if(!boolCode){
+        errorinput("#ucode","验证码输入有误！");
+        getCodeImg();
+        return;
+    }else{
+        trueinput("#ucode");
+    }
+    // if(hasId()&&hasPwd()){
+        // $(this).attr("type","submit");
+    // console.log(boolCode&&boolPwd&&boolId);
+    if(boolCode&&boolPwd&&boolId){
+
+        let data={
+            uid:$("#uid").val(),
+            upwd:$("#upwd").val(),
+            ucode:$("#ucode").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "http://localhost:8080/finance_war_exploded/login",
+            dataType: "json",
+            data:data,
+            success: function (data) {
+                console.log(data);
+                if(data == 2){
+                    // $(this).prop("type","submit");
+                    // $(this).submit();
+                    window.sessionStorage.setItem("uid",$("#uid").val());
+                    // $.session.set();
+                    document.location.href = "http://localhost:8080/finance_war_exploded/home";
+                }else{
+                    alert("账号或密码错误！");
+                    getCodeImg();
+                }
+            },error:function () {
+                console.log("网络连接失败！");
+            }
+        });
+
+        // $(this).prop("type","button");
+
+    }
+
     // }else{
-    //     $(this).parent("div").removeClass("notfocus");
-    //     $(this).parent("div").addClass("getFocus");
+        // $(this).attr("type","submit");
     // }
-    $(this).submit();
 });
 
 
@@ -103,21 +154,33 @@ $(".login .but .agine").click(function again(){
         $(".login .from .input >div").css("border-color","#666");
         $(".login .from input").val("");
         getCodeImg();
-        drawCode();
+        // drawCode();
     // }
 });
 
-var code_now = [1, 2, 3, 4, 5];
-getCodeImg();
+
 
 function getCodeImg() {
     // alert("next img");
-    for (i = 0; i < 5; i++){
-        code_now[i] = Math.floor(Math.random()*10);
-    }
+    // for (i = 0; i < 5; i++){
+    //     code_now[i] = Math.floor(Math.random()*10);
+    // }
     // console.log(code_now);
     // code_now = Math.ceil(Math.random() * 89999 + 10000);
     //异步请求获取验证码
+    $.ajax({
+        type: "post",
+        url: "http://localhost:8080/finance_war_exploded/getCode",
+        dataType: "json",
+        success: function (data) {
+                for(i=0;i<data.length;i++){
+                    code_now[i]=data[i];
+                }
+                drawCode();
+        },error:function () {
+            console.log("验证码拉取失败！");
+        }
+    });
     // code_now = "12345";
 }
 var colors = ["slateblue",
@@ -137,29 +200,29 @@ var colors = ["slateblue",
     "yellowgreen",
     "red"];
 var fonts = ["58px Times New Roman",
-    "70px Georgia",
+    "78px Georgia",
     "72px Verdana",
     "78px Arial",
     "78px 宋体",
-    "71px 楷体",
+    "86px 楷体",
     "78px LiSu",
     "78px YouYuan",
-    "78px PmingLiu",
+    "89px PmingLiu",
     "74px Impact",
     "78px Tahoma",
     "78px Courier New",
     "78px Times New Roman",
-    "77px Georgia",
+    "87px Georgia",
     "79px Verdana",
-    "70px Arial",
+    "88px Arial",
     "72px 宋体",
-    "70px 楷体",
+    "86px 楷体",
     "76px LiSu",
     "72px YouYuan",
-    "70px PmingLiu",
+    "82px PmingLiu",
     "72px Impact",
     "76px Tahoma",
-    "72px Courier New"];
+    "90px Courier New"];
 function drawCode(){
     var cs = document.getElementById("cav").getContext("2d");
     // cs.rotate(0);
@@ -167,8 +230,8 @@ function drawCode(){
     cs.fillStyle="silver";
     cs.clearRect(0, 0, 300, 150);
     
-    var line = code_now;
-    for (i = 0; i < line.length; i++) {
+    // var line = code_now;
+    for (i = 0; i < code_now.length; i++) {
         // console.log(line[i]);
         // cs.font = "58px Times New Roman";
         cs.font = fonts[Math.floor(Math.random() * fonts.length)];
@@ -176,7 +239,7 @@ function drawCode(){
         cs.fillStyle = colors[Math.floor(Math.random() * colors.length)];
 
         var lineType = Math.floor(Math.random() * 4);
-        console.log(lineType);
+        // console.log(lineType);
         if (lineType == 1) {
             cs.textBaseline = "bottom";
         } else if (lineType == 2) {
@@ -184,25 +247,26 @@ function drawCode(){
         } else if (lineType == 3) {
             cs.textBaseline="middle"
         }
-        var agrgs = Math.PI / (1 / 2 + Math.floor(Math.random() * 2 - 2) / 4);
-        cs.rotate(agrgs);
-        var x =Math.floor(Math.random()*5 -5) / 100+1;
+        // var agrgs = Math.PI / (1 / 2 + Math.floor(Math.random() * 2 - 2) / 4);
+        // cs.rotate(agrgs);
+        var x =Math.floor(Math.random()*10 -5) / 100+1;
         var y = Math.floor(Math.random()*5 -5) / 100+1;
         cs.scale(x,y);
         // console.log(x+"=="+y);
-        cs.fillText(line[i], 50 + i * (Math.floor(Math.random() * 15 + 15)), 90 + (Math.floor(Math.random() * 15 - 15)));
-        cs.rotate(-agrgs);
+        cs.fillText(code_now[i], 50 + i * 30, 90 + (Math.floor(Math.random() * 2 - 2)));
+        // cs.rotate(-agrgs);
         cs.scale(1/x,1/y);
     }
 }
 $(".login .from .code-img canvas").click(function img(){
     getCodeImg();
-    drawCode();
+    // drawCode();
 });
-
-drawCode();
 
 $(".code-img a").click(function () {
     getCodeImg();
-    drawCode();
+    // drawCode();
 });
+
+getCodeImg();
+// drawCode();

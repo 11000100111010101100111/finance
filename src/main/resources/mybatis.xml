@@ -8,5 +8,6 @@
     </typeAliases>
     <mappers >
         <mapper resource="/mapper/loginMapper.xml"/>
+        <mapper resource="/mapper/ApplicationMapper.xml"/>
     </mappers>
 </configuration>

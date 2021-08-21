@@ -6,4 +6,11 @@
     <select id="login" parameterType="java.lang.Long" resultType="com.xjh.pojo.User">
         select uid as id,upwd as pwd from user where uid = #{id}
     </select>
+    <select id="getUser" resultType="com.xjh.pojo.EasyUser">
+        select * from easyuser where uid = #{uid}
+    </select>
+
+    <select id="getHomeList" resultType="com.xjh.pojo.HomeList" parameterType="java.lang.Long">
+        select `name`,`path` from home_list where grade in (select easyuser.grade from easyuser where uid = #{uid})
+    </select>
 </mapper>

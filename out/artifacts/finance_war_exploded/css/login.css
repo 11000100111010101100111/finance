@@ -2,9 +2,11 @@
     margin: 0;
     padding: 0;
 }
-
+body::-webkit-scrollbar{
+    display: none;
+}
 body {
-    background: url('../res/page.JPG') no-repeat;
+    background: url('../res/page.JPG') ;
     /* background-size: 100% 100%; */
 }
 

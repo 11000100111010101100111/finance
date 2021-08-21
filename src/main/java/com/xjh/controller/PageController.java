@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 
     @RequestMapping("/home")
-    public String home(){
+    public String toHome(){
         return "home";
     }
 
     @RequestMapping("/application")
-    public String application(){
+    public String toApplication(){
         return "application";
     }
 
     @RequestMapping("/audit")
-    public String audit(){
+    public String toAudit(){
         return "audit";
     }
 
     @RequestMapping("/toLogin")
-    public String tologin(){
+    public String login(){
         return "login";
     }
 }

@@ -5,7 +5,7 @@
            "<td>362430********986523</td><td>123456</td><td>1200.00</td><td>1500.00</td><td>2021-8-16</td><td>待审核</td><td>22222</td>"+
            "<td><input type='button' value='详情' class='item-operator-detil' onclick='showdetil(this)'></td></tr>");
        }
-       addalls();
+       // addalls();
        //测试数据
         function testData(){
             var arr = ['直接成本','公款','江西省科学院','中国邮政储蓄银行','621799435*****6857','预付类','无','1000','2000'];
@@ -61,31 +61,58 @@
         //     status:0000,
         //     instanceId:0
 
+        //      SELECT payment_slip.id AS id,
+        //          payment_slip.payee AS payee,
+        //          payment_slip.bank AS bank,
+        //          payment_slip.bankcount AS bankcount,
+        //          payment_slip.costtype AS costtype,
+        //          payment_slip.chargetype AS chargetype,
+        //          payment_slip.amountcategory AS amountcategory,
+        //          payment_slip.appamount AS appamount,
+        //          payment_slip.audioamount AS audioamount,
+        //          payment_slip.illustrate AS illustrate,
+        //          app_form.id AS nodeid,
+        //          app_form.status AS `status`,
+        //          app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND app_form.oder_user_id= #{uid};
         //判断全选按钮是否选中，选中则添加的一行业为选中状态
             var isChecked = $(".box-list .box-list-list table thead input[type='checkbox']").prop("checked");
+             // amountCategory: 1
+             // appAmount: 2000
+             // audioAmount: 2500
+             // bank: "中国银行"
+             // bankCount: "12345678954846156"
+             // chargeType: 1
+             // costType: 1
+             // id: 1
+             // illustrate: "无"
+             // nodeid: 1
+             // payee: "江西省科学院"
+             // status: 1
+             // time: 1629552318000
 
 
             // console.log(allCheckBox);
             var no = $(".box-list-list table tbody").find("tr").length+1;
-            var style = (row.status=="待提交" || row.status=="未通过")?"display:inline-block;":"display:none;";
+            var style = ( toStatus(row.status) =="待提交" || toStatus(row.status)=="未通过"  )?
+                "display:inline-block;":"display:none;";
             var msg = "<tr>"+
                         "<td>"+no+"</td>"+
                         "<td>"+
                             "<input type='checkbox' class='check-item'"+ (isChecked?" checked":" ") +">"+
                         "</td>"+
                         "<td class='item-id'>"+row.id+"</td>"+
-                        "<td>"+row.typeofchengben+"</td>"+
-                        "<td>"+row.typeoffukuang+"</td>"+
-                        "<td>"+row.typeofkuangxiang+"</td>"+
-                        "<td>"+row.danwei+"</td>"+
+                        "<td>"+toCosttype(row.costType)+"</td>"+
+                        "<td>"+toChargetype(row.chargeType)+"</td>"+
+                        "<td>"+toAmountcategory(row.amountCategory)+"</td>"+
+                        "<td>"+row.payee+"</td>"+
                         "<td>"+row.bank+"</td>"+
-                        "<td>"+row.account+"</td>"+
-                        "<td>"+row.text+"</td>"+
-                        "<td>"+row.application+"</td>"+
-                        "<td>"+row.approve+"</td>"+
+                        "<td>"+row.bankCount+"</td>"+
+                        "<td>"+row.illustrate+"</td>"+
+                        "<td>"+row.appAmount+"</td>"+
+                        "<td>"+row.audioAmount+"</td>"+
                         "<td>"+row.time+"</td>"+
-                        "<td>"+row.status+"</td>"+
-                        "<td>"+row.instanceId+"</td>"+
+                        "<td>"+toStatus(row.status)+"</td>"+
+                        "<td>"+row.nodeid+"</td>"+
                         "<td>"+
                             "<input type='button' value='详情' class='item-operator-detil' onclick='showdetil(this)''>"+
                             "<input type='button' value='提交' style='"+style+"' class='item-operator-submit' onclick='submitRow(this)''>"+
@@ -118,12 +145,31 @@
         }
         // 刷新表格
         function flushTable(){
-            cleanTable();
-            //异步查询所有信息
-            // var list=[];
-            var list=testData();
-            
-            addTable(list);
+
+            data={uid:uid_now};
+            //异步查询所有信息 /getApplicationList
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/finance_war_exploded/getApplicationList",
+                dataType: "json",
+                data:data,
+                success: function (data) {
+                    if(data.single == "succeed"){
+                        cleanTable();
+
+                        var list=data.list;
+                        // var list=testData();
+                        // console.log(data.list);
+                        // console.log(list);
+                        addTable(list);
+                    }else{
+                        alert(data.single);
+                    }
+                },error:function () {
+                    console.log("数据列表拉取失败！");
+                }
+            });
+
         }
 
 
@@ -143,11 +189,11 @@
             //异步提交查询
             //...
             cleanTable();
+            flushTable();
            
-           
-            var list = testData();
+            // var list = testData();
             
-            addTable(list);
+            // addTable(list);
         }
 
         $(".box-list-seach input[type='button']").click(seachMsg);
@@ -192,7 +238,7 @@
             //  console.log(status);
 
              //测试数据
-             var arr = ['直接成本','公账','预付类','江西省科学院','中国邮政储蓄银行','621799435*****6857','无','1000','2000'];
+             // var arr = ['直接成本','公账','预付类','江西省科学院','中国邮政储蓄银行','621799435*****6857','无','1000','2000'];
              
              if(!hasStatus(item)){
                  
@@ -201,26 +247,52 @@
                  $(".submit").css("display",'none');
                  //根据item_id异步查询信息
                  //......
- 
+                 data={id:item_id};
+                 //异步查询所有信息 /getApplicationList
+                 $.ajax({
+                     type: "post",
+                     url: "http://localhost:8080/finance_war_exploded/getApplication",
+                     dataType: "json",
+                     data:data,
+                     success: function (data) {
+                         if(data.single == "succeed"){
+
+                             let arr =[
+                                 data.list.payee  //收款人
+                                 ,data.list.bank      //开户银行
+                                 ,data.list.bankCount    //银行账号
+                                 ,data.list.illustrate  //申请说明
+                                 ,data.list.appAmount    //申请金额
+                                 ,data.list.audioAmount  //批准金额
+                             ];
+                             var list = $(".add-item-page .input-msg");
+                             for(i=0;i<list.length;i++){
+                                 list[i].value=arr[i];
+                             }
+
+                             //成本类型 1:直接成本、2:非直接成本
+                             $("[name = 'item-chengben'][value='"+toCosttype(data.list.costType)+"']").prop("checked",true) ;
+                             //付款类型（费用类）：   1:公章、2:私账
+                             $("[name = 'item-fukuan'][value='"+toChargetype(data.list.chargeType)+"']").prop("checked",true);
+                             //款项类（款项性质）：   1:预付类、2:应付类
+                             $("[name = 'item-kuanxiang'][value='"+toAmountcategory(data.list.amountCategory)+"']").prop("checked",true) ;
+
+
+                             $(".show").css("opacity","0.2");
+                             $(".add-item-page").css("display","inline-block");
+                         }else{
+                             alert(data.single);
+                         }
+                     },error:function () {
+                         console.log("数据列表拉取失败！");
+                     }
+                 });
  
                   //已提交的信息无法在修改，内容输入框禁用
                  $(".add-item-page .inlineblock,.add-item-page input[type='radio']").attr("disabled",true);
              }else{
                  arr = readCell(item);
              }
-             
- 
-             var list = $(".add-item-page .input-msg");
-             for(i=3;i-3<list.length;i++){
-                     list[i-3].value=arr[i];
-             }
-             $("[name = 'item-chengben'][value='"+arr[0]+"']").prop("checked",true) ;
-             $("[name = 'item-fukuan'][value='"+arr[1]+"']").prop("checked",true);
-             $("[name = 'item-kuanxiang'][value='"+arr[2]+"']").prop("checked",true) ;
-             
-             
-             $(".show").css("opacity","0.2");
-             $(".add-item-page").css("display","inline-block");
          }
  
          //读取当前单元格内容
@@ -254,9 +326,9 @@
              for(i=0;i<list.length;i++){
                  arr[i]=list[i].value;
              }
-             arr[list.length] = $("[name = 'item-chengben']").val();
-             arr[list.length+1] = $("[name = 'item-fukuan']").val();
-             arr[list.length+2] = $("[name = 'item-kuanxiang']").val();
+             arr[list.length] = $("[name = 'item-chengben']").val()==="直接成本"?1:2;
+             arr[list.length+1] = $("[name = 'item-fukuan']").val()==="公账"?1:2;
+             arr[list.length+2] = $("[name = 'item-kuanxiang']").val()==="预付类"?1:2;
              return arr;
          }
  
@@ -271,26 +343,43 @@
                  }
              }
  
-             var data = { 
-                id:"-",
-                typeofchengben:arr[6],
-                typeoffukuang:arr[7],
-                danwei:arr[0],
-                bank:arr[1],
-                account:arr[2],
-                typeofkuangxiang:arr[8],
-                text:arr[3]==""?"-啥也没写-":arr[3],
-                application:arr[4],
-                approve:arr[5],
-                status:"待提交",
-                time:"****-**-** **:**:**",
-                instanceId:"*"
-             }
+             var data = {
+                     id: 0,
+                     costType: arr[6],
+                     chargeType: arr[7],
+                     payee: arr[0],
+                     bank: arr[1],
+                     bankCount: arr[2],
+                     amountCategory: arr[8],
+                     illustrate: arr[3] === "" ? "-啥也没写-" : arr[3],
+                     appAmount: arr[4],
+                     audioAmount: arr[5],
+                     status: 1,
+                     time: null,
+                     instanceId: null
+             };
+             //
              console.log(data);
              if(confirm("是否将这条申请提交？")){
- 
-                insertRow(data);
-                 //异步提交
+                 $.ajax({
+
+                     type: "post",
+                     // contentType:"application/json;charset=UTF-8",
+                     url: "http://localhost:8080/finance_war_exploded/addApplication",
+                     dataType: "json",
+                     data:data,
+                     success:function (data) {
+                        if(data.single == "succeed"){
+                            flushTable();
+                            // insertRow(data);
+                        }else {
+                                console.log(data.single);
+                        }
+                     },
+                     error:function () {
+                         console.log("连接失败");
+                     }
+                 });
              }
              closePanel();
          }
@@ -381,3 +470,5 @@
             }
             // showdetil($(checkbox).parents("tr").find("td .item-operator-detil"));
          });
+
+       flushTable();
