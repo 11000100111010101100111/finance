@@ -23,7 +23,7 @@
         payment_slip.illustrate AS illustrate,
         app_form.id AS nodeid,
         app_form.status AS `status`,
-        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND app_form.oder_user_id= #{uid};
+        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND app_form.oder_user_id= #{uid} AND payment_slip.single > 0;
     </select>
 <!--    public AppPaySlip getApplication(Long id);-->
     <select id="getApplication" resultType="com.xjh.pojo.AppPaySlip" parameterType="java.lang.Long">
@@ -39,10 +39,10 @@
         payment_slip.illustrate AS illustrate,
         app_form.id AS nodeid,
         app_form.status AS `status`,
-        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND payment_slip.id= #{id};
+        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND payment_slip.id= #{id} AND payment_slip.single > 0;
     </select>
 
-    <insert id="addApplication" parameterType="com.xjh.pojo.AppPaySlip" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addApplication" parameterType="appPaySlip" useGeneratedKeys="true" keyProperty="id">
         insert into payment_slip(
             payee,
             bank,
@@ -52,19 +52,20 @@
             amountcategory,
             appamount,
             audioamount,
-        illustrate,) values(
+            illustrate) values(
             #{payee},
             #{bank},
             #{bankCount},
             #{costType},
             #{chargeType},
             #{amountCategory},
-            #{appamount},
-            #{audioamount},
-            #{illustrate},
+            #{appAmount},
+            #{audioAmount},
+            #{illustrate}
         )
     </insert>
-    <insert id="addAppForm" parameterType="com.xjh.pojo.AppPaySlip" >
+
+    <insert id="addAppForm" >
         insert into app_form(
             payslip_id,
             oder_user_id,
@@ -76,4 +77,94 @@
             now()
         )
     </insert>
+
+    <update id="modifyApplication" parameterType="appPaySlip">
+        update payment_slip set
+            payee = #{payee},
+            bank = #{bank},
+            bankcount = #{bankCount},
+            costtype = #{costType},
+            chargetype = #{chargeType},
+            amountcategory = #{amountCategory},
+            appamount = #{appAmount},
+            audioamount = #{audioAmount},
+            illustrate = #{illustrate}
+            where `id` = #{id}
+    </update>
+
+<!--    public Integer removeApplication(Long id);-->
+<!--    修改single字段值<=0，表示已删除-->
+    <update id="removeApplication" >
+        update payment_slip set single = 0 where id = #{id}
+    </update>
+
+    <update id="removeSlip" >
+        update app_form set single = 0 where payslip_id = #{id}
+    </update>
+
+    <select id="selectCostType" resultType="short">
+        select costtype from payment_slip where `id` = #{id}
+    </select>
+
+<!--    public Integer selectGrade(Long id);-->
+    <select id="selectGrade" resultType="java.lang.Integer">
+        select grade from easyuser where uid = #{id}
+    </select>
+
+    <select id="selectMember" resultType="com.xjh.pojo.EasyUser">
+       SELECT uid, grade FROM easyuser WHERE easyuser.uid = (SELECT employee.uid FROM employee WHERE employee.lower_id = #{id});
+    </select>
+
+    <select id="selectremark" resultType="java.lang.String">
+        select illustrate from payment_slip where id = #{aid}
+    </select>
+
+    <insert id="addApplicationNode" >
+        INSERT INTO app_list (application_id,node_user_id) VALUES ( (SELECT app_form.id FROM app_form WHERE app_form.payslip_id = #{aid}),#{uid})
+    </insert>
+
+<!--    public Integer writeNodeMsg(@Param("uid")Long uid,@Param("aid")Long aid,@Param("operator") short operator,@Param("remark")String remark);-->
+    <update id="writeNodeMsg">
+        update app_list set operator = #{operator},remark = #{remark},`time` = now() where application_id = (select app_form.id from app_form where payslip_id = #{aid}) AND node_user_id = #{uid}
+    </update>
+
+    <update id="charageState">
+        update app_form set status = #{status} where payslip_id = #{aid}
+    </update>
+
+    <update id="charageNodeState">
+        update app_list set operator = #{status} where node_user_id = #{uid} and application_id = (select app_form.id from app_form where payslip_id = #{aid})
+    </update>
+
+<!--    public AppPaySlip findAppList(@Param("time_start") Date time_satrt,-->
+<!--    @Param("time_end") Date time_end,-->
+<!--    @Param("costType") Short costType,-->
+<!--    @Param("chargeType")Short chargeType);-->
+    <select id="findAppList" resultType="com.xjh.pojo.AppPaySlip">
+        SELECT payment_slip.id AS id,
+        payment_slip.payee AS payee,
+        payment_slip.bank AS bank,
+        payment_slip.bankcount AS bankcount,
+        payment_slip.costtype AS costtype,
+        payment_slip.chargetype AS chargetype,
+        payment_slip.amountcategory AS amountcategory,
+        payment_slip.appamount AS appamount,
+        payment_slip.audioamount AS audioamount,
+        payment_slip.illustrate AS illustrate,
+        app_form.id AS nodeid,
+        app_form.status AS `status`,
+        app_form.time AS `time` FROM payment_slip,app_form WHERE payment_slip.id = app_form.payslip_id AND app_form.oder_user_id= #{uid} AND payment_slip.single > 0
+        <if test="time_start != null and time_start !=''">
+            and app_form.time >= #{time_start}
+        </if>
+        <if test="time_end != null and time_end !=''">
+            and app_form.time &lt;= #{time_end}
+        </if>
+        <if test="costType != null and costType > 0">
+            and payment_slip.costtype = #{costType}
+        </if>
+        <if test="chargeType != null and chargeType>0">
+            and payment_slip.chargetype =#{chargeType}
+        </if>
+    </select>
 </mapper>

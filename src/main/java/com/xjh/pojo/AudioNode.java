@@ -24,7 +24,14 @@ public class AudioNode{
     Long id;
     Long application_id;
     Long node_user_id;
+
+//    1:"待提交"
+//    2:"待审核"
+//    3:"未通过"
+//    4:"待提交"
+//    5:"已通过"
     short operator;
+
     Date time;
     String remark;
     short status;

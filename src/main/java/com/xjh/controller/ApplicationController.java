@@ -3,13 +3,18 @@ package com.xjh.controller;
 import com.alibaba.fastjson.JSON;
 import com.xjh.pojo.AppPaySlip;
 import com.xjh.service.ApplicationService;
+import com.xjh.service.DateUtil;
+import com.xjh.service.processInstance.AddApplicationProcess;
+import com.xjh.service.processInstance.FitProcess;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,6 +26,10 @@ import java.util.HashMap;
 public class ApplicationController {
     @Resource(name = "applicationServiceImpl")
     ApplicationService applicationService;
+
+    //依赖注入添加审批链的执行句柄
+    @Resource(name = "processHandle")
+    AddApplicationProcess applicationProcess;
 
     @ResponseBody
     @RequestMapping("/getApplicationList")
@@ -72,10 +81,125 @@ public class ApplicationController {
                 val.put("id", aid);
                 single = "succeed";
             } catch (Exception e) {
+
                 System.out.println("添加申请失败");
+                System.out.println(e.getLocalizedMessage()+e.getMessage());
             }
         }
         val.put("single",single);
         return JSON.toJSONString(val);
+    }
+
+    @ResponseBody
+    @RequestMapping("/modifyApplication")
+    public String modifyApplication(HttpSession httpSession,
+                                 @RequestParam("id")Long sid,
+                                 @RequestParam("costType")short costType,
+                                 @RequestParam("chargeType")short chargeType,
+                                 @RequestParam("payee")String payee,
+                                 @RequestParam("bank")String bank,
+                                 @RequestParam("bankCount")String bankCount,
+                                 @RequestParam("amountCategory")short amountCategory,
+                                 @RequestParam("illustrate")String illustrate,
+                                 @RequestParam("appAmount")double appAmount,
+                                 @RequestParam("audioAmount")double audioAmount){
+
+        String single="error";
+        AppPaySlip appPaySlip = new AppPaySlip(sid,payee,bank,bankCount,costType,chargeType,amountCategory,appAmount,audioAmount,illustrate);
+
+        System.out.println(appPaySlip);
+        String id =(String)httpSession.getAttribute("uid");
+        System.out.println(id);
+        HashMap<String ,Object> val = new HashMap<String,Object>();
+        if(!"".equals(id)&&id!=null) {
+
+            try {
+                String aid = applicationService.modifyApplication(appPaySlip, id);
+                single = aid;
+            } catch (Exception e) {
+                System.out.println("修改申请失败");
+                System.out.println(e.getLocalizedMessage()+e.getMessage());
+            }
+        }else{
+            single = "登录信息失效";
+        }
+        val.put("single",single);
+        return JSON.toJSONString(val);
+    }
+
+    @ResponseBody
+    @RequestMapping("/removeApplication")
+    public String removeApplication(HttpSession httpSession,@RequestParam("ids") String[] ids){
+        String uid =(String) httpSession.getAttribute("uid");
+        System.out.println(ids.toString()+"------------");
+//        List<String> ids = (ArrayList<String>) id;
+//        System.out.println(ids);
+        String single ="error";
+        HashMap<String ,Object> val = new HashMap<String,Object>();
+        if("".equals(uid)||uid==null){
+            single = "登录信息已过期";
+            val.put("single",single);
+//            return JSON.toJSONString(single);
+        }
+        List<String> error = new ArrayList<String>();
+        for (String s : ids) {
+            System.out.println(s);
+            String item = applicationService.removeApplication(s);
+            if(item != "succeed") error.add(s);
+        }
+        val.put("list",error) ;
+        val.put("single",error.size()>0?"error":"succeed");
+
+        return JSON.toJSONString(val);
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/submitApplication")
+    public String submitApp(HttpSession httpSession,@RequestParam("sid") String uid,@RequestParam("id") String id){
+        String u = (String) httpSession.getAttribute("uid");
+        String val = "error";
+        if(u==null||"".equals(u))
+            return JSON.toJSONString("用户登录信息已失效");
+        try {
+            applicationProcess.addMembers(uid, id);
+            applicationProcess.addAudit(id, uid);
+            val="succeed";
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            val ="提交申请失败！";
+        }
+        return JSON.toJSONString(val);
+    }
+
+    @ResponseBody
+    @RequestMapping("/findAppList")
+    public String findAppList(
+            @RequestParam(value = "uid", required = false) String uid,
+            @RequestParam(value = "starTime", required = false)String starTime,
+            @RequestParam(value = "endTime", required = false)String endTime,
+            @RequestParam(value = "cost", required = false)Short cost,
+            @RequestParam(value = "payType", required = false)Short payType){
+//        System.out.println(uid+"=="+starTime+"<--->"+endTime+"=="+cost+"=="+payType);
+
+//        String uid = (String)httpSession.getAttribute("uid");
+        String single="error";
+        HashMap<String ,Object> list = new HashMap<String,Object>();
+        if(uid==null||"".equals(uid))
+            single = "用户登录信息已失效";
+        else {
+            List<AppPaySlip> val = applicationService.findAppList(
+                    "".equals(starTime)||starTime ==null?null:DateUtil.StringToDate(starTime.replace('T',' ')+":00"),
+                    "".equals(endTime)||endTime ==null?null:DateUtil.StringToDate(endTime.replace('T',' ')+":59"),
+                    cost<=0||cost ==null?null:cost,
+                    payType<=0||payType ==null?null:payType,
+                    Long.parseLong(uid));
+
+            list.put("list",val);
+            single = "succeed";
+        }
+
+        list.put("single",single);
+        return JSON.toJSONString(list);
     }
 }

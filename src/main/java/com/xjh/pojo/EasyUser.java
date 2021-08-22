@@ -27,6 +27,11 @@ public class EasyUser extends User{
     public EasyUser() {
     }
 
+    public EasyUser(Long uid, int grade) {
+        this.uid = uid;
+        this.grade = grade;
+    }
+
     public EasyUser(Long id, Long uid, String uname, String posts, int grade, String department) {
         this.id = id;
         this.uid = uid;

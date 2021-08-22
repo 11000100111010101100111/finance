@@ -26,6 +26,31 @@ public class AppPaySlip{
     public AppPaySlip() {
     }
 
+    public AppPaySlip(Long id, String payee, String bank, String bankCount, short costType, short chargeType, short amountCategory, double appAmount, double audioAmount, String illustrate) {
+        this.id = id;
+        this.payee = payee;
+        this.bank = bank;
+        this.bankCount = bankCount;
+        this.costType = costType;
+        this.chargeType = chargeType;
+        this.amountCategory = amountCategory;
+        this.appAmount = appAmount;
+        this.audioAmount = audioAmount;
+        this.illustrate = illustrate;
+    }
+
+    public AppPaySlip(String payee, String bank, String bankCount, short costType, short chargeType, short amountCategory, double appAmount, double audioAmount, String illustrate) {
+        this.payee = payee;
+        this.bank = bank;
+        this.bankCount = bankCount;
+        this.costType = costType;
+        this.chargeType = chargeType;
+        this.amountCategory = amountCategory;
+        this.appAmount = appAmount;
+        this.audioAmount = audioAmount;
+        this.illustrate = illustrate;
+    }
+
     public AppPaySlip(Long id, String payee, String bank, String bankCount, short costType, short chargeType, short amountCategory, double appAmount, double audioAmount, String illustrate, short status) {
         this.id = id;
         this.payee = payee;

@@ -27,9 +27,12 @@ CREATE TABLE `app_form` (
   `status` smallint(6) DEFAULT NULL,
   `time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `app_form` */
+
+insert  into `app_form`(`id`,`payslip_id`,`oder_user_id`,`status`,`time`) values 
+(1,1,123464,1,'2021-08-21 21:25:18');
 
 /*Table structure for table `app_list` */
 
@@ -88,6 +91,30 @@ CREATE TABLE `employee` (
 
 /*Data for the table `employee` */
 
+/*Table structure for table `home_list` */
+
+DROP TABLE IF EXISTS `home_list`;
+
+CREATE TABLE `home_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  `path` varchar(100) DEFAULT NULL,
+  `grade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Data for the table `home_list` */
+
+insert  into `home_list`(`id`,`name`,`path`,`grade`) values 
+(1,'申请','http://localhost:8080/finance_war_exploded/application',7),
+(2,'我的申请','http://localhost:8080/finance_war_exploded/application',7),
+(3,'审批','http://localhost:8080/finance_war_exploded/audit',1),
+(4,'审批','http://localhost:8080/finance_war_exploded/audit',2),
+(5,'审批','http://localhost:8080/finance_war_exploded/audit',3),
+(6,'审批','http://localhost:8080/finance_war_exploded/audit',4),
+(7,'审批','http://localhost:8080/finance_war_exploded/audit',5),
+(8,'审批','http://localhost:8080/finance_war_exploded/audit',6);
+
 /*Table structure for table `payment_slip` */
 
 DROP TABLE IF EXISTS `payment_slip`;
@@ -104,9 +131,12 @@ CREATE TABLE `payment_slip` (
   `audioAmount` float DEFAULT NULL,
   `illustrate` varchar(215) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_slip` */
+
+insert  into `payment_slip`(`id`,`payee`,`bank`,`bankCount`,`costType`,`chargeType`,`amountCategory`,`appAmount`,`audioAmount`,`illustrate`) values 
+(1,'江西省科学院','中国银行','12345678954846156',1,1,1,2000,2500,'无');
 
 /*Table structure for table `user` */
 

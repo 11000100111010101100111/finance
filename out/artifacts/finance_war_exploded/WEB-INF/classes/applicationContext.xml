@@ -2,19 +2,39 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
     <context:component-scan base-package="com.xjh.dao"/>
     <context:component-scan base-package="com.xjh.service"/>
 
     <context:component-scan base-package="com.xjh.aopPage"/>
-
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
     <bean id="database" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/finance?characterEncoding=utf8"/>
-        <property name="username" value="root"/>
-        <property name="password" value=""/>
+        <property name="driverClassName">
+            <value>${master.jdbc.driverClassName}</value>
+        </property>
+        <property name="url">
+            <value>${master.jdbc.url}</value>
+        </property>
+        <property name="username">
+            <value>${master.jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${master.jdbc.password}</value>
+        </property>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -26,4 +46,10 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.xjh.dao"/>
     </bean>
+
+    <bean id="appTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="database" />
+    </bean>
+    <tx:annotation-driven proxy-target-class="false" transaction-manager="appTransactionManager" />
+
 </beans>
