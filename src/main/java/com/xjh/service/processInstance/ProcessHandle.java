@@ -25,9 +25,10 @@ public class ProcessHandle implements AddApplicationProcess{
 
     @Override
     public void addMembers(String uid,String id){
+        System.out.println(id);
         short costType = apDao.selectCostType(Long.parseLong(id));
 
-        System.out.println(costType);
+        System.out.println(id+"-----"+costType);
 
         fitProcess = costType == 1? new DirectCosts(Long.parseLong(id),Long.parseLong(uid))
                 :new NonDirectCosts(Long.parseLong(id),Long.parseLong(uid));
@@ -71,6 +72,7 @@ public class ProcessHandle implements AddApplicationProcess{
 
             Map.Entry<Long, Integer> item = iterator.next();
 
+            System.out.println(item.getKey()+"***"+item.getValue());
             val = apDao.addApplicationNode(Long.parseLong(appid), item.getKey());
             if(val<=0)
                 //抛出异常，事务回滚，即动作撤销，后动作不执行

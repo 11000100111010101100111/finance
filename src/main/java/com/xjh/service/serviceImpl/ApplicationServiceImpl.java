@@ -1,10 +1,8 @@
 package com.xjh.service.serviceImpl;
 
-import com.alibaba.fastjson.JSON;
 import com.xjh.dao.ApplicationDao;
 import com.xjh.pojo.AppPaySlip;
 import com.xjh.service.ApplicationService;
-import com.xjh.service.DateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

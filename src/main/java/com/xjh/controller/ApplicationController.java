@@ -3,18 +3,15 @@ package com.xjh.controller;
 import com.alibaba.fastjson.JSON;
 import com.xjh.pojo.AppPaySlip;
 import com.xjh.service.ApplicationService;
-import com.xjh.service.DateUtil;
+import com.xjh.util.DateUtil;
 import com.xjh.service.processInstance.AddApplicationProcess;
-import com.xjh.service.processInstance.FitProcess;
+import com.xjh.util.LogUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Created by IntelliJ IDEA.
@@ -159,15 +156,20 @@ public class ApplicationController {
     public String submitApp(HttpSession httpSession,@RequestParam("sid") String uid,@RequestParam("id") String id){
         String u = (String) httpSession.getAttribute("uid");
         String val = "error";
-        if(u==null||"".equals(u))
+        if(u==null||"".equals(u)) {
+            LogUtil.logInfo("用户登录信息已失效!",ApplicationController.class.getName(),"submitApp");
             return JSON.toJSONString("用户登录信息已失效");
+        }
+        LogUtil.logInfo("用户"+uid+"登录",ApplicationController.class.getName(),"submitApp");
         try {
             applicationProcess.addMembers(uid, id);
             applicationProcess.addAudit(id, uid);
             val="succeed";
+            LogUtil.logInfo("用户"+uid+"提交申请成功",ApplicationController.class.getName(),"submitApp");
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage()+"----------");
             val ="提交申请失败！";
+            LogUtil.logError("用户"+uid+"提交申请失败",ApplicationController.class.getName(),"submitApp");
         }
         return JSON.toJSONString(val);
     }

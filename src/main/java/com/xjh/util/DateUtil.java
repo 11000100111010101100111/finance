@@ -1,4 +1,4 @@
-package com.xjh.service;
+package com.xjh.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

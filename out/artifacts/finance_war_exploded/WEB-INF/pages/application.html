@@ -171,9 +171,178 @@
                 </div>
 
                 <div class="form">
-                    <label class="inlineblock title">申请内容：</label>
-                    <textarea type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请内容..."></textarea>
-                    
+                    <label class="inlineblock title" >申请项：</label>
+                    <div class="inlineblock">
+                        <input type="button" class="inlineblock" value="添加">
+                        <table class="inlineblock" id="app_tab">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>描述</th>
+                                    <th>费用</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr><tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr><tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr><tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr><tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr><tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr><tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项描述">
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="输入申请项费用">
+                                </td>
+                                <td>
+                                    <input type="button" value="移除">
+                                </td>
+                            </tr>
+
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form">
+                    <label class="inlineblock title">附件：</label>
+                    <div class="inlineblock">
+                        <input type="button" class="inlineblock" value="添加附件">
+                        <table class="inlineblock" id="app_file_tab">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>文件名</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>fileName.file</td>
+                                    <td>
+                                        <input type="buttom" value="移除">
+                                        <input type="button" value="下载">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="form">
@@ -182,9 +351,15 @@
                 </div>
 
                 
-                <div class="form">
+                <div class="form" style="display: none">
                     <label class="inlineblock title">批准金额￥：</label>
                     <input type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="批准金额">
+                </div>
+
+                <div class="form">
+                    <label class="inlineblock title">申请内容：</label>
+                    <textarea type="text" autocomplete="off" required class="inlineblock input-msg" placeholder="申请内容..."></textarea>
+
                 </div>
                 <div class="form btn">
                     <input type="button" class="submit" value="确 定">
